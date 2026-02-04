@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vastu Master Admin</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+</head>
+<body style="background:#0f172a; color:white; font-family:sans-serif; text-align:center; padding-top:100px;">
+    <h1>Vastu Forensic Master</h1>
+    <div style="background:#1e293b; padding:40px; border-radius:15px; display:inline-block; border:1px solid #334155;">
+        <p>Device: VF-001</p>
+        <p>Status: <span id="st">IDLE</span></p>
+        <button onclick="push()" style="padding:15px 30px; background:#3b82f6; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">ACTIVATE PAID UPDATE</button>
+    </div>
+    <script>
+        const conf = {apiKey: "AIzaSyBarFxiXb3Q4-37VBRhWdJPnjsPmMlgTi0", databaseURL: "https://vastu-forensic-audit-default-rtdb.asia-southeast1.firebasedatabase.app/"};
+        firebase.initializeApp(conf);
+        const db = firebase.database();
+        db.ref('machines/VF-001/command').on('value', s => document.getElementById('st').innerText = s.val());
+        function push() {
+            db.ref('clients/VF-001/paid_status').set('paid');
+            db.ref('machines/VF-001/command').set('START_UPDATE');
+            alert("Command Sent!");
+        }
+    </script>
+</body>
+</html>
